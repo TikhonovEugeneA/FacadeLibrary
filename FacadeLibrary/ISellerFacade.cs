@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FacadeLibrary
 {
-    internal interface ISellerFacade
+    public interface ISellerFacade
     {
     }
 }
