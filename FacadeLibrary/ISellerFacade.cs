@@ -8,5 +8,6 @@ namespace FacadeLibrary
 {
     public interface ISellerFacade
     {
+        List<Order> GetOrderListForEmployes();
     }
 }

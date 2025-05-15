@@ -8,5 +8,6 @@ namespace FacadeLibrary
 {
     public interface ICustomerFacade
     {
+        List<Product> GetProductList();
     }
 }

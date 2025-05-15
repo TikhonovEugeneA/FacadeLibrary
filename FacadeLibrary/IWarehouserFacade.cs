@@ -8,5 +8,7 @@ namespace FacadeLibrary
 {
     public interface IWarehouserFacade
     {
+        List<Product> GetProductList();
+        List<Order> GetOrderListForEmployes();
     }
 }
