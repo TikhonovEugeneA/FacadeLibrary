@@ -10,5 +10,6 @@ namespace FacadeLibrary
     {
         List<Product> GetProductList();
         List<Order> GetOrderListForEmployes();
+        List<Product> GetProductListInOrder(int order_id);
     }
 }

@@ -9,5 +9,6 @@ namespace FacadeLibrary
     public interface ISellerFacade
     {
         List<Order> GetOrderListForEmployes();
+        List<Product> GetProductListInOrder(int order_id);
     }
 }

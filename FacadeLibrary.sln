@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FacadeLibrary", "FacadeLibr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestsFacade", "UnitTestsFacade\UnitTestsFacade.csproj", "{71B864F7-A00E-4158-88DE-2E63A48CCE09}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewConsole", "ViewConsole\ViewConsole.csproj", "{954397B6-C058-44F4-8424-12BACBCD62F0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewWindowsForms", "ViewWindowsForms\ViewWindowsForms.csproj", "{11C89471-2391-4028-B2A7-E35844819F8A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{71B864F7-A00E-4158-88DE-2E63A48CCE09}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71B864F7-A00E-4158-88DE-2E63A48CCE09}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71B864F7-A00E-4158-88DE-2E63A48CCE09}.Release|Any CPU.Build.0 = Release|Any CPU
-		{954397B6-C058-44F4-8424-12BACBCD62F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{954397B6-C058-44F4-8424-12BACBCD62F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{954397B6-C058-44F4-8424-12BACBCD62F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{954397B6-C058-44F4-8424-12BACBCD62F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11C89471-2391-4028-B2A7-E35844819F8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11C89471-2391-4028-B2A7-E35844819F8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11C89471-2391-4028-B2A7-E35844819F8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11C89471-2391-4028-B2A7-E35844819F8A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
