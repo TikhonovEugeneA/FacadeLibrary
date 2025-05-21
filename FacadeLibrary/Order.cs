@@ -16,8 +16,4 @@ namespace FacadeLibrary
         public decimal OrderCost {  get; set; }
         public string Status { get; set; }
     }
-    public enum Orderstatus
-    {
-
-    }
 }

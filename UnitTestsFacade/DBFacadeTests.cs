@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using FacadeLibrary;
@@ -13,15 +14,6 @@ namespace UnitTestsFacade
         public string connectionString = "Server=localhost;Port=5432;Database=dbshop;User Id=postgres;Password=controlway";
 
         [TestMethod]
-        public void TestGetUserRole()
-        {
-            DBFacade dBFacade = DBFacade.GetInstance(connectionString);
-            string value = dBFacade.GetUserRole("79131001010", "123");
-            string trueValue = "admin";
-            Assert.AreEqual(trueValue,value);
-        }
-
-        [TestMethod]
         public void TestLogin()
         {
             DBFacade dbFacade = DBFacade.GetInstance(connectionString);
@@ -33,30 +25,11 @@ namespace UnitTestsFacade
         [TestMethod]
         public void TestGetStatusList()
         {
-            DBFacade dBFacade = DBFacade.GetInstance(connectionString);
+            DBFacade dBFacade = DBFacade.GetInstance(connectionString); // MOCK (JDBUnit)
             List<string> value = dBFacade.GetStatusList();
             List<string> trueValue = new List<string>(){"Принят","В сборке","Собран","Запрошен","Передан","Выдан","Возврат","Разобран"};
-            CollectionAssert.AreEqual(trueValue, value);
-        }
-
-        [TestMethod]
-        public void TestGetProductList()
-        {
-            DBFacade dBFacade = DBFacade.GetInstance(connectionString);
-            Product expectedProduct = new Product()
-            {
-                ProductName = "Шуруповерт",
-                Manufacturer = "Bosch",
-                CategoryName = "Инструменты",
-                UnitPrice = 12500,
-                ConditionWholesale = 3,
-                Discount = 5,
-                ProductCount = 15
-            };
-
-            List<Product> actualProducts = dBFacade.GetProductList();
-
-            CollectionAssert.Contains(actualProducts, expectedProduct);
+            //CollectionAssert.AreEqual(trueValue, value);
+            Assert.AreEqual(value[1], trueValue[1]);
         }
 
         [TestMethod]

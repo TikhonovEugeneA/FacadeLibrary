@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FacadeLibrary
 {
-    public struct User
+    public class User
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

@@ -11,5 +11,6 @@ namespace FacadeLibrary
         List<Product> GetProductList();
         List<Product> GetProductListInOrder(int order_id);
         void RegistrationCustomer(string firstName, string lastName, string phone, string password);
+        List<Product> GetProductsFromCart(int userId);
     }
 }
