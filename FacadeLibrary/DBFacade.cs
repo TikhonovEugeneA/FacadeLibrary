@@ -59,6 +59,13 @@ namespace FacadeLibrary
                 .ForMember(dest => dest.discount, opt => opt.MapFrom(src => src["discount"]))
                 .ForMember(dest => dest.product_count, opt => opt.MapFrom(src => src["product_count"]))
                 .ForMember(dest => dest.product_count_in_cart, opt => opt.MapFrom(src => src["product_count_in_cart"]));
+                cfg.CreateMap<IDataRecord, Shipment>()
+                .ForMember(dest => dest.product_name, opt => opt.MapFrom(src => src["product_id"]))
+                .ForMember(dest => dest.manufacturer, opt => opt.MapFrom(src => src["product_name"]))
+                .ForMember(dest => dest.category, opt => opt.MapFrom(src => src["manufacturer"]))
+                .ForMember(dest => dest.company_name, opt => opt.MapFrom(src => src["category_name"]))
+                .ForMember(dest => dest.shipment_date, opt => opt.MapFrom(src => src["unit_price"]))
+                .ForMember(dest => dest.product_count, opt => opt.MapFrom(src => src["condition_wholesale"]))
             });
             mapper = configuration.CreateMapper();
         }

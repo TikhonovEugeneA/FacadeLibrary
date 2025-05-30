@@ -126,6 +126,7 @@
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\FacadeLibrary.Order.datasource" />
+    <None Include="Properties\DataSources\FacadeLibrary.Product.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -144,6 +145,9 @@
       <Project>{9015e560-0831-4aa0-bf6a-f73df8764cb5}</Project>
       <Name>FacadeLibrary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

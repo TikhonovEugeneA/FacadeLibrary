@@ -32,18 +32,12 @@
             this.tabControlWarehouser = new System.Windows.Forms.TabControl();
             this.tabPageProducts = new System.Windows.Forms.TabPage();
             this.dataGridViewProducts = new System.Windows.Forms.DataGridView();
-            this.ColumnProductName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnProductCategory = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnManufacturer = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnConditionWholesale = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnDiscount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnUnitPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnProductCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPageShipments = new System.Windows.Forms.TabPage();
-            this.dataGridViewCart = new System.Windows.Forms.DataGridView();
+            this.dataGridViewShipments = new System.Windows.Forms.DataGridView();
             this.tabPageOrders = new System.Windows.Forms.TabPage();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewOrdersForWarehouser = new System.Windows.Forms.DataGridView();
             this.orderBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.ColumnGetOrderInfo = new System.Windows.Forms.DataGridViewButtonColumn();
             this.orderIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.userLastNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.userFirstNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -51,14 +45,25 @@
             this.orderDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.orderCostDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.statusDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnNewOrderStatus = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.productBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.productIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.productNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.manufacturerDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.categoryNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.unitPriceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.conditionWholesaleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.discountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.productCountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControlWarehouser.SuspendLayout();
             this.tabPageProducts.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewProducts)).BeginInit();
             this.tabPageShipments.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCart)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewShipments)).BeginInit();
             this.tabPageOrders.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewOrdersForWarehouser)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.orderBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.productBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControlWarehouser
@@ -71,6 +76,7 @@
             this.tabControlWarehouser.SelectedIndex = 0;
             this.tabControlWarehouser.Size = new System.Drawing.Size(958, 571);
             this.tabControlWarehouser.TabIndex = 2;
+            this.tabControlWarehouser.SelectedIndexChanged += new System.EventHandler(this.tabControlWarehouser_SelectedIndexChanged);
             // 
             // tabPageProducts
             // 
@@ -85,15 +91,19 @@
             // 
             // dataGridViewProducts
             // 
+            this.dataGridViewProducts.AutoGenerateColumns = false;
+            this.dataGridViewProducts.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewProducts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewProducts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ColumnProductName,
-            this.ColumnProductCategory,
-            this.ColumnManufacturer,
-            this.ColumnConditionWholesale,
-            this.ColumnDiscount,
-            this.ColumnUnitPrice,
-            this.ColumnProductCount});
+            this.productIdDataGridViewTextBoxColumn,
+            this.productNameDataGridViewTextBoxColumn,
+            this.manufacturerDataGridViewTextBoxColumn,
+            this.categoryNameDataGridViewTextBoxColumn,
+            this.unitPriceDataGridViewTextBoxColumn,
+            this.conditionWholesaleDataGridViewTextBoxColumn,
+            this.discountDataGridViewTextBoxColumn,
+            this.productCountDataGridViewTextBoxColumn});
+            this.dataGridViewProducts.DataSource = this.productBindingSource;
             this.dataGridViewProducts.Location = new System.Drawing.Point(6, 6);
             this.dataGridViewProducts.Name = "dataGridViewProducts";
             this.dataGridViewProducts.RowHeadersWidth = 51;
@@ -101,63 +111,9 @@
             this.dataGridViewProducts.Size = new System.Drawing.Size(938, 443);
             this.dataGridViewProducts.TabIndex = 0;
             // 
-            // ColumnProductName
-            // 
-            this.ColumnProductName.HeaderText = "Название";
-            this.ColumnProductName.MinimumWidth = 6;
-            this.ColumnProductName.Name = "ColumnProductName";
-            this.ColumnProductName.Width = 125;
-            // 
-            // ColumnProductCategory
-            // 
-            this.ColumnProductCategory.HeaderText = "Категория";
-            this.ColumnProductCategory.MinimumWidth = 6;
-            this.ColumnProductCategory.Name = "ColumnProductCategory";
-            this.ColumnProductCategory.Width = 125;
-            // 
-            // ColumnManufacturer
-            // 
-            this.ColumnManufacturer.HeaderText = "Производитель";
-            this.ColumnManufacturer.MinimumWidth = 6;
-            this.ColumnManufacturer.Name = "ColumnManufacturer";
-            this.ColumnManufacturer.ReadOnly = true;
-            this.ColumnManufacturer.Width = 125;
-            // 
-            // ColumnConditionWholesale
-            // 
-            this.ColumnConditionWholesale.HeaderText = "Условия скидки";
-            this.ColumnConditionWholesale.MinimumWidth = 6;
-            this.ColumnConditionWholesale.Name = "ColumnConditionWholesale";
-            this.ColumnConditionWholesale.ReadOnly = true;
-            this.ColumnConditionWholesale.Width = 125;
-            // 
-            // ColumnDiscount
-            // 
-            this.ColumnDiscount.HeaderText = "Скидка";
-            this.ColumnDiscount.MinimumWidth = 6;
-            this.ColumnDiscount.Name = "ColumnDiscount";
-            this.ColumnDiscount.ReadOnly = true;
-            this.ColumnDiscount.Width = 125;
-            // 
-            // ColumnUnitPrice
-            // 
-            this.ColumnUnitPrice.HeaderText = "Цена";
-            this.ColumnUnitPrice.MinimumWidth = 6;
-            this.ColumnUnitPrice.Name = "ColumnUnitPrice";
-            this.ColumnUnitPrice.ReadOnly = true;
-            this.ColumnUnitPrice.Width = 125;
-            // 
-            // ColumnProductCount
-            // 
-            this.ColumnProductCount.HeaderText = "В наличии";
-            this.ColumnProductCount.MinimumWidth = 6;
-            this.ColumnProductCount.Name = "ColumnProductCount";
-            this.ColumnProductCount.ReadOnly = true;
-            this.ColumnProductCount.Width = 125;
-            // 
             // tabPageShipments
             // 
-            this.tabPageShipments.Controls.Add(this.dataGridViewCart);
+            this.tabPageShipments.Controls.Add(this.dataGridViewShipments);
             this.tabPageShipments.Location = new System.Drawing.Point(4, 25);
             this.tabPageShipments.Name = "tabPageShipments";
             this.tabPageShipments.Padding = new System.Windows.Forms.Padding(3);
@@ -166,19 +122,19 @@
             this.tabPageShipments.Text = "Поставка";
             this.tabPageShipments.UseVisualStyleBackColor = true;
             // 
-            // dataGridViewCart
+            // dataGridViewShipments
             // 
-            this.dataGridViewCart.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewCart.Location = new System.Drawing.Point(7, 7);
-            this.dataGridViewCart.Name = "dataGridViewCart";
-            this.dataGridViewCart.RowHeadersWidth = 51;
-            this.dataGridViewCart.RowTemplate.Height = 24;
-            this.dataGridViewCart.Size = new System.Drawing.Size(937, 461);
-            this.dataGridViewCart.TabIndex = 0;
+            this.dataGridViewShipments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewShipments.Location = new System.Drawing.Point(7, 7);
+            this.dataGridViewShipments.Name = "dataGridViewShipments";
+            this.dataGridViewShipments.RowHeadersWidth = 51;
+            this.dataGridViewShipments.RowTemplate.Height = 24;
+            this.dataGridViewShipments.Size = new System.Drawing.Size(937, 461);
+            this.dataGridViewShipments.TabIndex = 0;
             // 
             // tabPageOrders
             // 
-            this.tabPageOrders.Controls.Add(this.dataGridView1);
+            this.tabPageOrders.Controls.Add(this.dataGridViewOrdersForWarehouser);
             this.tabPageOrders.Location = new System.Drawing.Point(4, 25);
             this.tabPageOrders.Name = "tabPageOrders";
             this.tabPageOrders.Size = new System.Drawing.Size(950, 542);
@@ -186,85 +142,162 @@
             this.tabPageOrders.Text = "Заказы";
             this.tabPageOrders.UseVisualStyleBackColor = true;
             // 
-            // dataGridView1
+            // dataGridViewOrdersForWarehouser
             // 
-            this.dataGridView1.AutoGenerateColumns = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewOrdersForWarehouser.AutoGenerateColumns = false;
+            this.dataGridViewOrdersForWarehouser.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewOrdersForWarehouser.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewOrdersForWarehouser.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColumnGetOrderInfo,
             this.orderIdDataGridViewTextBoxColumn,
             this.userLastNameDataGridViewTextBoxColumn,
             this.userFirstNameDataGridViewTextBoxColumn,
             this.userPhoneDataGridViewTextBoxColumn,
             this.orderDateDataGridViewTextBoxColumn,
             this.orderCostDataGridViewTextBoxColumn,
-            this.statusDataGridViewTextBoxColumn});
-            this.dataGridView1.DataSource = this.orderBindingSource;
-            this.dataGridView1.Location = new System.Drawing.Point(3, 3);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(929, 459);
-            this.dataGridView1.TabIndex = 0;
+            this.statusDataGridViewTextBoxColumn,
+            this.ColumnNewOrderStatus});
+            this.dataGridViewOrdersForWarehouser.DataSource = this.orderBindingSource;
+            this.dataGridViewOrdersForWarehouser.Location = new System.Drawing.Point(3, 3);
+            this.dataGridViewOrdersForWarehouser.Name = "dataGridViewOrdersForWarehouser";
+            this.dataGridViewOrdersForWarehouser.RowHeadersWidth = 51;
+            this.dataGridViewOrdersForWarehouser.RowTemplate.Height = 24;
+            this.dataGridViewOrdersForWarehouser.Size = new System.Drawing.Size(929, 459);
+            this.dataGridViewOrdersForWarehouser.TabIndex = 0;
             // 
             // orderBindingSource
             // 
             this.orderBindingSource.DataSource = typeof(FacadeLibrary.Order);
             // 
+            // ColumnGetOrderInfo
+            // 
+            this.ColumnGetOrderInfo.HeaderText = "Информация о заказе";
+            this.ColumnGetOrderInfo.MinimumWidth = 6;
+            this.ColumnGetOrderInfo.Name = "ColumnGetOrderInfo";
+            this.ColumnGetOrderInfo.ReadOnly = true;
+            this.ColumnGetOrderInfo.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColumnGetOrderInfo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.ColumnGetOrderInfo.Text = "О заказе";
+            this.ColumnGetOrderInfo.UseColumnTextForButtonValue = true;
+            // 
             // orderIdDataGridViewTextBoxColumn
             // 
             this.orderIdDataGridViewTextBoxColumn.DataPropertyName = "OrderId";
-            this.orderIdDataGridViewTextBoxColumn.HeaderText = "OrderId";
+            this.orderIdDataGridViewTextBoxColumn.HeaderText = "ID";
             this.orderIdDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.orderIdDataGridViewTextBoxColumn.Name = "orderIdDataGridViewTextBoxColumn";
-            this.orderIdDataGridViewTextBoxColumn.Width = 125;
             // 
             // userLastNameDataGridViewTextBoxColumn
             // 
             this.userLastNameDataGridViewTextBoxColumn.DataPropertyName = "UserLastName";
-            this.userLastNameDataGridViewTextBoxColumn.HeaderText = "UserLastName";
+            this.userLastNameDataGridViewTextBoxColumn.HeaderText = "Фамилия заказчика";
             this.userLastNameDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.userLastNameDataGridViewTextBoxColumn.Name = "userLastNameDataGridViewTextBoxColumn";
-            this.userLastNameDataGridViewTextBoxColumn.Width = 125;
             // 
             // userFirstNameDataGridViewTextBoxColumn
             // 
             this.userFirstNameDataGridViewTextBoxColumn.DataPropertyName = "UserFirstName";
-            this.userFirstNameDataGridViewTextBoxColumn.HeaderText = "UserFirstName";
+            this.userFirstNameDataGridViewTextBoxColumn.HeaderText = "Имя заказчика";
             this.userFirstNameDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.userFirstNameDataGridViewTextBoxColumn.Name = "userFirstNameDataGridViewTextBoxColumn";
-            this.userFirstNameDataGridViewTextBoxColumn.Width = 125;
             // 
             // userPhoneDataGridViewTextBoxColumn
             // 
             this.userPhoneDataGridViewTextBoxColumn.DataPropertyName = "UserPhone";
-            this.userPhoneDataGridViewTextBoxColumn.HeaderText = "UserPhone";
+            this.userPhoneDataGridViewTextBoxColumn.HeaderText = "Телефон заказчика";
             this.userPhoneDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.userPhoneDataGridViewTextBoxColumn.Name = "userPhoneDataGridViewTextBoxColumn";
-            this.userPhoneDataGridViewTextBoxColumn.Width = 125;
             // 
             // orderDateDataGridViewTextBoxColumn
             // 
             this.orderDateDataGridViewTextBoxColumn.DataPropertyName = "OrderDate";
-            this.orderDateDataGridViewTextBoxColumn.HeaderText = "OrderDate";
+            this.orderDateDataGridViewTextBoxColumn.HeaderText = "Дата";
             this.orderDateDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.orderDateDataGridViewTextBoxColumn.Name = "orderDateDataGridViewTextBoxColumn";
-            this.orderDateDataGridViewTextBoxColumn.Width = 125;
             // 
             // orderCostDataGridViewTextBoxColumn
             // 
             this.orderCostDataGridViewTextBoxColumn.DataPropertyName = "OrderCost";
-            this.orderCostDataGridViewTextBoxColumn.HeaderText = "OrderCost";
+            this.orderCostDataGridViewTextBoxColumn.HeaderText = "Стоимость";
             this.orderCostDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.orderCostDataGridViewTextBoxColumn.Name = "orderCostDataGridViewTextBoxColumn";
-            this.orderCostDataGridViewTextBoxColumn.Width = 125;
             // 
             // statusDataGridViewTextBoxColumn
             // 
             this.statusDataGridViewTextBoxColumn.DataPropertyName = "Status";
-            this.statusDataGridViewTextBoxColumn.HeaderText = "Status";
+            this.statusDataGridViewTextBoxColumn.HeaderText = "Статус";
             this.statusDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.statusDataGridViewTextBoxColumn.Name = "statusDataGridViewTextBoxColumn";
-            this.statusDataGridViewTextBoxColumn.Width = 125;
+            this.statusDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // ColumnNewOrderStatus
+            // 
+            this.ColumnNewOrderStatus.HeaderText = "Новый статус";
+            this.ColumnNewOrderStatus.MinimumWidth = 6;
+            this.ColumnNewOrderStatus.Name = "ColumnNewOrderStatus";
+            this.ColumnNewOrderStatus.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColumnNewOrderStatus.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // productBindingSource
+            // 
+            this.productBindingSource.DataSource = typeof(FacadeLibrary.Product);
+            // 
+            // productIdDataGridViewTextBoxColumn
+            // 
+            this.productIdDataGridViewTextBoxColumn.DataPropertyName = "ProductId";
+            this.productIdDataGridViewTextBoxColumn.HeaderText = "ProductId";
+            this.productIdDataGridViewTextBoxColumn.MinimumWidth = 6;
+            this.productIdDataGridViewTextBoxColumn.Name = "productIdDataGridViewTextBoxColumn";
+            this.productIdDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // productNameDataGridViewTextBoxColumn
+            // 
+            this.productNameDataGridViewTextBoxColumn.DataPropertyName = "ProductName";
+            this.productNameDataGridViewTextBoxColumn.HeaderText = "Название";
+            this.productNameDataGridViewTextBoxColumn.MinimumWidth = 6;
+            this.productNameDataGridViewTextBoxColumn.Name = "productNameDataGridViewTextBoxColumn";
+            // 
+            // manufacturerDataGridViewTextBoxColumn
+            // 
+            this.manufacturerDataGridViewTextBoxColumn.DataPropertyName = "Manufacturer";
+            this.manufacturerDataGridViewTextBoxColumn.HeaderText = "Производитель";
+            this.manufacturerDataGridViewTextBoxColumn.MinimumWidth = 6;
+            this.manufacturerDataGridViewTextBoxColumn.Name = "manufacturerDataGridViewTextBoxColumn";
+            // 
+            // categoryNameDataGridViewTextBoxColumn
+            // 
+            this.categoryNameDataGridViewTextBoxColumn.DataPropertyName = "CategoryName";
+            this.categoryNameDataGridViewTextBoxColumn.HeaderText = "Категория";
+            this.categoryNameDataGridViewTextBoxColumn.MinimumWidth = 6;
+            this.categoryNameDataGridViewTextBoxColumn.Name = "categoryNameDataGridViewTextBoxColumn";
+            // 
+            // unitPriceDataGridViewTextBoxColumn
+            // 
+            this.unitPriceDataGridViewTextBoxColumn.DataPropertyName = "UnitPrice";
+            this.unitPriceDataGridViewTextBoxColumn.HeaderText = "Цена";
+            this.unitPriceDataGridViewTextBoxColumn.MinimumWidth = 6;
+            this.unitPriceDataGridViewTextBoxColumn.Name = "unitPriceDataGridViewTextBoxColumn";
+            // 
+            // conditionWholesaleDataGridViewTextBoxColumn
+            // 
+            this.conditionWholesaleDataGridViewTextBoxColumn.DataPropertyName = "ConditionWholesale";
+            this.conditionWholesaleDataGridViewTextBoxColumn.HeaderText = "Условия скидки";
+            this.conditionWholesaleDataGridViewTextBoxColumn.MinimumWidth = 6;
+            this.conditionWholesaleDataGridViewTextBoxColumn.Name = "conditionWholesaleDataGridViewTextBoxColumn";
+            // 
+            // discountDataGridViewTextBoxColumn
+            // 
+            this.discountDataGridViewTextBoxColumn.DataPropertyName = "Discount";
+            this.discountDataGridViewTextBoxColumn.HeaderText = "Скидка";
+            this.discountDataGridViewTextBoxColumn.MinimumWidth = 6;
+            this.discountDataGridViewTextBoxColumn.Name = "discountDataGridViewTextBoxColumn";
+            // 
+            // productCountDataGridViewTextBoxColumn
+            // 
+            this.productCountDataGridViewTextBoxColumn.DataPropertyName = "ProductCount";
+            this.productCountDataGridViewTextBoxColumn.HeaderText = "В наличии";
+            this.productCountDataGridViewTextBoxColumn.MinimumWidth = 6;
+            this.productCountDataGridViewTextBoxColumn.Name = "productCountDataGridViewTextBoxColumn";
             // 
             // FormWarehouserMain
             // 
@@ -278,10 +311,11 @@
             this.tabPageProducts.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewProducts)).EndInit();
             this.tabPageShipments.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCart)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewShipments)).EndInit();
             this.tabPageOrders.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewOrdersForWarehouser)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.orderBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.productBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -292,16 +326,11 @@
         private System.Windows.Forms.TabPage tabPageProducts;
         private System.Windows.Forms.DataGridView dataGridViewProducts;
         private System.Windows.Forms.TabPage tabPageShipments;
-        private System.Windows.Forms.DataGridView dataGridViewCart;
+        private System.Windows.Forms.DataGridView dataGridViewShipments;
         private System.Windows.Forms.TabPage tabPageOrders;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnProductName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnProductCategory;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnManufacturer;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnConditionWholesale;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDiscount;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnUnitPrice;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnProductCount;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dataGridViewOrdersForWarehouser;
+        private System.Windows.Forms.BindingSource orderBindingSource;
+        private System.Windows.Forms.DataGridViewButtonColumn ColumnGetOrderInfo;
         private System.Windows.Forms.DataGridViewTextBoxColumn orderIdDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn userLastNameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn userFirstNameDataGridViewTextBoxColumn;
@@ -309,6 +338,15 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn orderDateDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn orderCostDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn statusDataGridViewTextBoxColumn;
-        private System.Windows.Forms.BindingSource orderBindingSource;
+        private System.Windows.Forms.DataGridViewComboBoxColumn ColumnNewOrderStatus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn productIdDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn productNameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn manufacturerDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn categoryNameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn unitPriceDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn conditionWholesaleDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn discountDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn productCountDataGridViewTextBoxColumn;
+        private System.Windows.Forms.BindingSource productBindingSource;
     }
 }
