@@ -19,7 +19,6 @@ namespace FacadeLibrary
         public readonly string connectionString = "Server=localhost;Port=5432;Database=dbshop;User Id=postgres;Password=controlway";
         public readonly NpgsqlConnection _connection; // нужно подумать 
 
-        //public DBFacadeBase base;
         private DBFacade(string connectionString)
         {
             _connection = new NpgsqlConnection(connectionString);
@@ -27,12 +26,12 @@ namespace FacadeLibrary
             MapperConfiguration configuration = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<IDataRecord, User>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src["user_id"]))
-                .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src["first_name"]))
-                .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src["last_name"]))
-                .ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src["phone"]))
-                .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src["user_password"]))
-                .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src["role_name"]));
+                .ForMember(dest => dest.user_id, opt => opt.MapFrom(src => src["user_id"]))
+                .ForMember(dest => dest.first_name, opt => opt.MapFrom(src => src["first_name"]))
+                .ForMember(dest => dest.last_name, opt => opt.MapFrom(src => src["last_name"]))
+                .ForMember(dest => dest.phone, opt => opt.MapFrom(src => src["phone"]))
+                .ForMember(dest => dest.user_password, opt => opt.MapFrom(src => src["user_password"]))
+                .ForMember(dest => dest.role_name, opt => opt.MapFrom(src => src["role_name"]));
                 cfg.CreateMap<IDataRecord, Product>()
                 .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src["product_id"]))
                 .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src["product_name"]))
@@ -44,10 +43,22 @@ namespace FacadeLibrary
                 .ForMember(dest => dest.ProductCount, opt => opt.MapFrom(src => src["product_count"]));
                 cfg.CreateMap<IDataRecord, Order>()
                 .ForMember(dest => dest.OrderId, opt => opt.MapFrom(src => src["order_id"]))
-                .ForMember(dest => dest.User, opt => opt.MapFrom(src => src["user_id"]))
+                .ForMember(dest => dest.UserLastName, opt => opt.MapFrom(src => src["last_name"]))
+                .ForMember(dest => dest.UserFirstName, opt => opt.MapFrom(src => src["first_name"]))
+                .ForMember(dest => dest.UserPhone, opt => opt.MapFrom(src => src["phone"]))
                 .ForMember(dest => dest.OrderDate, opt => opt.MapFrom(src => src["order_date"]))
                 .ForMember(dest => dest.OrderCost, opt => opt.MapFrom(src => src["order_cost"]))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src["status_name"]));
+                cfg.CreateMap<IDataRecord, Cart>()
+                .ForMember(dest => dest.product_id, opt => opt.MapFrom(src => src["product_id"]))
+                .ForMember(dest => dest.product_name, opt => opt.MapFrom(src => src["product_name"]))
+                .ForMember(dest => dest.manufacturer, opt => opt.MapFrom(src => src["manufacturer"]))
+                .ForMember(dest => dest.category_name, opt => opt.MapFrom(src => src["category_name"]))
+                .ForMember(dest => dest.unit_price, opt => opt.MapFrom(src => src["unit_price"]))
+                .ForMember(dest => dest.condition_wholesale, opt => opt.MapFrom(src => src["condition_wholesale"]))
+                .ForMember(dest => dest.discount, opt => opt.MapFrom(src => src["discount"]))
+                .ForMember(dest => dest.product_count, opt => opt.MapFrom(src => src["product_count"]))
+                .ForMember(dest => dest.product_count_in_cart, opt => opt.MapFrom(src => src["product_count_in_cart"]));
             });
             mapper = configuration.CreateMapper();
         }
@@ -73,7 +84,7 @@ namespace FacadeLibrary
                     return modelObjectList;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception($"{exceptionText} по причине: {ex.Message}");
             }
@@ -95,7 +106,7 @@ namespace FacadeLibrary
                 throw new Exception($"{exceptionText} по причине: {ex.Message}");
             }
         }
-        public void ExecuterNonQuery(string query,string exceptionText)
+        public void ExecuterNonQuery(string query, string exceptionText)
         {
             try
             {
@@ -123,7 +134,7 @@ namespace FacadeLibrary
                                 values ('{firstName}','{lastName}','{phone}','{password}',
                                 (select role_id from roles where role_name = 'customer'))";
             string exceptionText = "Ошибка регистрации";
-            ExecuterNonQuery(query,exceptionText);
+            ExecuterNonQuery(query, exceptionText);
         }
         public List<string> GetStatusList()
         {
@@ -134,32 +145,32 @@ namespace FacadeLibrary
         public List<Product> GetProductList()
         {
             string query = @"select product_id,product_name, manufacturer, category_name, unit_price, condition_wholesale, discount, product_count 
-                             from products 
-                             join categories using(category_id)
-                             order by product_id asc";
+                           from products 
+                           join categories using(category_id)
+                           order by product_id asc";
             string textException = "Ошибка получения списка продуктов";
             return ExecuterGetObjects<Product>(query, textException);
         }
         public List<Order> GetOrderListForEmployes()
         {
-            string query = $@"select order_id, first_name,last_name,phone,order_date,order_cost,status_name from orders
-                              join users using (user_id)
-                              join statuses using (status_id)";
+            string query = $@"select order_id,last_name,first_name,phone,order_date,order_cost,status_name from orders
+                            join users using (user_id)
+                            join statuses using (status_id)";
             string textException = "Ошибка получения списка заказов";
             return ExecuterGetObjects<Order>(query, textException);
         }
         public List<Order> GetOrderListForCustomer(int user_id)
         {
             string query = $@"select order_id, first_name,last_name,phone,order_date,order_cost,status_name from orders
-                                join users using (user_id)
-                                join statuses using (status_id)
-                                where user_id = {user_id}";
+                            join users using (user_id)
+                            join statuses using (status_id)
+                            where user_id = {user_id}";
             string textException = "Ошибка получения списка заказов";
             return ExecuterGetObjects<Order>(query, textException);
         }
         public List<Product> GetProductListInOrder(int order_id)
         {
-            string query = $@"select product_name, category_name, manufacturer, unit_price, condition_wholesale, 
+            string query = $@"select product_id, product_name, category_name, manufacturer, unit_price, condition_wholesale, 
                                 discount, order_items.product_count from order_items
                                 join products using (product_id)
                                 join categories using (category_id)
@@ -167,40 +178,178 @@ namespace FacadeLibrary
             string textException = "Ошибка получения деталей заказа";
             return ExecuterGetObjects<Product>(query, textException);
         }
-        public List<Product> GetProductsFromCart(int userId)
+        public List<Cart> GetProductsFromCart(int userId)
         {
-            string query = $@"SELECT product_name, manufacturer, category_name, unit_price, condition_wholesale, discount, product_count 
+            string query = $@"SELECT product_id, product_name, manufacturer, category_name, unit_price, condition_wholesale, discount, product_count_in_cart, product_count 
                             FROM carts 
                             JOIN products USING(product_id)
                             JOIN categories USING(category_id)
                             where user_id={userId}";
             string textException = "Ошибка получения продуктов корзины";
-            return ExecuterGetObjects<Product>(query, textException);
+            return ExecuterGetObjects<Cart>(query, textException);
         }
-        // Сомнительные методы надо еще подумать
-        public List<Product> GetListProductAfterSort(string productName, string category, string manufacturer, bool inStock)
+        public void SaveProductInCart(int userId, int productId)
         {
-            return new List<Product>();
+            string query = $@"INSERT INTO carts (user_id, product_id, product_count_in_cart) values ({userId}, {productId}, 1)";
+            string exceptionText = "Ошибка добавления товара в корзину по причине";
+            ExecuterNonQuery(query, exceptionText);
         }
-        public Product GetProduct()
+        public void DeleteProductFromCart(int userId, int productId)
         {
-            return new Product();
+            string query = $@"delete from carts where user_id = {userId} and product_id = {productId}";
+            string exceptionText = "Ошибка удаления товара из корзины по причине";
+            ExecuterNonQuery(query, exceptionText);
         }
-        public void SaveProductInCart(int user_id, int product_id)
+        public void ClearCartAfterCalculateOrderCost(int userId)
         {
-            try
+            string query = $"delete from carts where user_id = {userId}";
+            string exceptionText = "Ошибка очистки корзины после оформления заказа";
+            ExecuterNonQuery(query, exceptionText);
+        }
+        public void UpdateProductCountInCart(int userId, int productId, int newCount)
+        {
+            string query;
+
+            if (newCount == 0)
+                query = $@"DELETE FROM carts WHERE user_id = {userId} AND product_id = {productId}";
+            else
+                query = $@"UPDATE carts SET product_count_in_cart = {newCount} WHERE user_id = {userId} AND product_id = {productId}";
+
+            string exceptionText = "Ошибка обновления количества товара в корзине";
+            ExecuterNonQuery(query, exceptionText);
+        }
+        public decimal CalculateOrderCost(int userId)
+        {
+            List<Cart> products = GetProductsFromCart(userId);
+            decimal total = 0;
+
+            foreach (var product in products)
             {
-                string query = $@"INSERT INTO carts (user_id, product_id) values ({user_id}, {product_id})";
-                using (var insertCommand = new NpgsqlCommand(query, _connection))
+                decimal pricePerItem = product.unit_price;
+                decimal discount = 0;
+
+                if (product.condition_wholesale <= product.product_count_in_cart && product.discount > 0)
                 {
-                    insertCommand.Parameters.AddWithValue("@userId", user_id);
-                    insertCommand.Parameters.AddWithValue("@productId", product_id);
+                    discount = product.unit_price * (product.discount / 100m);
+                    pricePerItem = product.unit_price - discount;
+                }
+                total += pricePerItem * product.product_count_in_cart;
+            }
+
+            return total;
+        }
+        public int CreateOrder(int userId, List<int> productIds, List<int> productCounts)
+        {
+            if (productIds.Count != productCounts.Count)
+            {
+                throw new ArgumentException("Количество продуктов и их количеств должно совпадать.");
+            }
+
+            using (var transaction = _connection.BeginTransaction())
+            {
+                try
+                {
+                    int orderId;
+                    decimal totalCost = CalculateOrderCost(userId);
+
+                    var orderQuery = @"
+                INSERT INTO orders (user_id, order_cost, status_id, order_date)
+                VALUES (@userId, @totalCost, 1, @orderDate)
+                RETURNING order_id";
+
+                    using (var cmd = new NpgsqlCommand(orderQuery, _connection, transaction))
+                    {
+                        cmd.Parameters.AddWithValue("@userId", userId);
+                        cmd.Parameters.AddWithValue("@totalCost", totalCost);
+                        cmd.Parameters.AddWithValue("@orderDate", DateTime.Now);
+                        orderId = (int)cmd.ExecuteScalar();
+                    }
+
+                    var itemsQuery = @"
+                INSERT INTO order_items (order_id, product_id, product_count)
+                VALUES (@orderId, @productId, @count)";
+
+                    for (int i = 0; i < productIds.Count; i++)
+                    {
+                        using (var cmd = new NpgsqlCommand(itemsQuery, _connection, transaction))
+                        {
+                            cmd.Parameters.AddWithValue("@orderId", orderId);
+                            cmd.Parameters.AddWithValue("@productId", productIds[i]);
+                            cmd.Parameters.AddWithValue("@count", productCounts[i]);
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+
+                    transaction.Commit();
+                    return orderId;
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    throw;
                 }
             }
-            catch (Exception ex)
+        }
+
+        private string GetOrderStatus(int orderId)
+        {
+            string query = $@"SELECT status_name FROM orders 
+            JOIN statuses USING(status_id) 
+            WHERE order_id = {orderId}";
+
+            using (NpgsqlCommand cmd = new NpgsqlCommand(query, _connection))
+            using (NpgsqlDataReader reader = cmd.ExecuteReader())
             {
-                Console.WriteLine($"Ошибка добавления товара в корзину: {ex.Message}");
+                if (reader.Read())
+                {
+                    return reader.GetString(0);
+                }
             }
+            return null;
+        }
+        public void UpdateOrderStatus(int orderId, string newStatus, string role)
+        {
+            Dictionary<string, Dictionary<string, bool>> allowedTransitions = new Dictionary<string, Dictionary<string, bool>>();
+
+            if (role == "customer")
+            {
+                allowedTransitions = new Dictionary<string, Dictionary<string, bool>>
+                {
+                    { "Принят", new Dictionary<string, bool> { { "Отменен", true } } }
+                };
+            }
+            if (role == "seller")
+            {
+                allowedTransitions = new Dictionary<string, Dictionary<string, bool>>
+                {
+                    { "Собран", new Dictionary<string, bool> { { "Запрошен", true } } },
+                    { "Запрошен", new Dictionary<string, bool> { { "Передан", true } } },
+                    { "Передан", new Dictionary<string, bool> { { "Выдан", true }, { "Возврат", true } } }
+                };
+            }
+            if (role == "warehouser")
+            {
+                allowedTransitions = new Dictionary<string, Dictionary<string, bool>>
+                {
+                    { "Принят", new Dictionary<string, bool> { { "В сборке", true } } },
+                    { "В сборке", new Dictionary<string, bool> { { "Собран", true } } },
+                    { "Возврат", new Dictionary<string, bool> { { "Разобран", true } } }
+                };
+            }
+
+            string currentStatus = GetOrderStatus(orderId);
+
+            if (!allowedTransitions.ContainsKey(currentStatus) ||
+                !allowedTransitions[currentStatus].ContainsKey(newStatus))
+            {
+                throw new InvalidOperationException($"Недопустимый переход статуса с '{currentStatus}' на '{newStatus}' для роли '{role}'");
+            }
+
+            string query = $@"UPDATE orders 
+            SET status_id = (SELECT status_id FROM statuses WHERE status_name = '{newStatus}')
+            WHERE order_id = {orderId}";
+
+            ExecuterNonQuery(query, $"Ошибка изменения статуса заказа на {newStatus}");
         }
     }
 }

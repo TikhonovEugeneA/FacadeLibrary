@@ -11,5 +11,6 @@ namespace FacadeLibrary
         List<Product> GetProductList();
         List<Order> GetOrderListForEmployes();
         List<Product> GetProductListInOrder(int order_id);
+        void UpdateOrderStatus(int orderId, string newStatus, string role);
     }
 }

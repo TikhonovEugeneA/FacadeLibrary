@@ -10,8 +10,9 @@ namespace FacadeLibrary
     public class Order
     {
         public int OrderId { get; set; }
-        public List<Product> products { get; set; }
-        public User User { get; set; }
+        public string UserLastName { get; set; }
+        public string UserFirstName { get; set; }
+        public string UserPhone { get; set; }
         public DateTime OrderDate { get; set; }
         public decimal OrderCost {  get; set; }
         public string Status { get; set; }

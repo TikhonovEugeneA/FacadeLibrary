@@ -99,6 +99,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cart.cs" />
     <Compile Include="DBFacade.cs" />
     <Compile Include="ICustomerFacade.cs" />
     <Compile Include="ISellerFacade.cs" />

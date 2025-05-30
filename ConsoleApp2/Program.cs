@@ -25,7 +25,8 @@ namespace ConsoleApp2
             //{
             //    Console.WriteLine(o.OrderId + " " + o.User.FirstName + " " + o.User.LastName + " " + o.User.Phone);
             //}
-            Console.WriteLine(dBFacade.Login("79132002020","123").Role.ToString());
+            //Console.WriteLine(dBFacade.Login("79132002020","123").Role.ToString());
+            //dBFacade.SaveProductInCart(6, 12);
         }
     }
 }

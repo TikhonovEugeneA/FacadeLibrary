@@ -95,6 +95,12 @@
     <Compile Include="FormSellerOrders.Designer.cs">
       <DependentUpon>FormSellerOrders.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormWarehouserMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormWarehouserMain.Designer.cs">
+      <DependentUpon>FormWarehouserMain.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormCustomerMain.resx">
@@ -102,6 +108,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSellerOrders.resx">
+      <DependentUpon>FormSellerOrders.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormWarehouserMain.resx">
+      <DependentUpon>FormWarehouserMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -113,6 +125,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\FacadeLibrary.Order.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

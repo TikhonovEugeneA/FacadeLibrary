@@ -122,8 +122,8 @@
             // 
             // tabControlLoginReg
             // 
-            this.tabControlLoginReg.Controls.Add(this.tabPage2);
             this.tabControlLoginReg.Controls.Add(this.tabPage1);
+            this.tabControlLoginReg.Controls.Add(this.tabPage2);
             this.tabControlLoginReg.Location = new System.Drawing.Point(13, 13);
             this.tabControlLoginReg.Name = "tabControlLoginReg";
             this.tabControlLoginReg.SelectedIndex = 0;

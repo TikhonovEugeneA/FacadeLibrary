@@ -28,7 +28,7 @@ namespace ViewWindowsForms
         private void buttonLogin_Click(object sender, EventArgs e)
         {
             User user = _dbFacade.Login(textBoxPhone.Text,textBoxPassword.Text);
-            if (user.Role == "customer")
+            if (user.role_name == "customer")
             {
                 this.Hide();
                 using (var customerForm = new FormCustomerMain(user, _dbFacade))
@@ -38,19 +38,25 @@ namespace ViewWindowsForms
                 this.Show();
                 textBoxPassword.Clear();
             }
-            else if (user.Role == "seller")
+            if (user.role_name == "seller")
             {
                 this.Hide();
-                using (var sellerForm = new FormSellerOrders(/*user, _dbFacade*/))
+                using (var sellerForm = new FormSellerOrders(user, _dbFacade))
                 {
                     sellerForm.ShowDialog();
                 }
                 this.Show();
                 textBoxPassword.Clear();
             }
-            else if (user.Role == "warehouser")
+            else if (user.role_name == "warehouser")
             {
-
+                this.Hide();
+                using (var warehouserForm = new FormWarehouserMain(user, _dbFacade))
+                {
+                    warehouserForm.ShowDialog();
+                }
+                this.Show();
+                textBoxPassword.Clear();
             }
             else
             {
@@ -110,7 +116,7 @@ namespace ViewWindowsForms
             }
             if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
             {
-                e.Handled = true; // Блокируем ввод
+                e.Handled = true;
                 return;
             }
         }
