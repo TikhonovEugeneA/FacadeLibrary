@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Npgsql;
 using Npgsql.TypeMapping;
 using AutoMapper;
+using ZXing;
 
 namespace FacadeLibrary
 {
@@ -60,12 +61,14 @@ namespace FacadeLibrary
                 .ForMember(dest => dest.product_count, opt => opt.MapFrom(src => src["product_count"]))
                 .ForMember(dest => dest.product_count_in_cart, opt => opt.MapFrom(src => src["product_count_in_cart"]));
                 cfg.CreateMap<IDataRecord, Shipment>()
-                .ForMember(dest => dest.product_name, opt => opt.MapFrom(src => src["product_id"]))
-                .ForMember(dest => dest.manufacturer, opt => opt.MapFrom(src => src["product_name"]))
-                .ForMember(dest => dest.category, opt => opt.MapFrom(src => src["manufacturer"]))
-                .ForMember(dest => dest.company_name, opt => opt.MapFrom(src => src["category_name"]))
-                .ForMember(dest => dest.shipment_date, opt => opt.MapFrom(src => src["unit_price"]))
-                .ForMember(dest => dest.product_count, opt => opt.MapFrom(src => src["condition_wholesale"]))
+                .ForMember(dest => dest.product_name, opt => opt.MapFrom(src => src["product_name"]))
+                .ForMember(dest => dest.manufacturer, opt => opt.MapFrom(src => src["manufacturer"]))
+                .ForMember(dest => dest.category, opt => opt.MapFrom(src => src["category"]))
+                .ForMember(dest => dest.company_name, opt => opt.MapFrom(src => src["company_name"]))
+                .ForMember(dest => dest.shipment_date, opt => opt.MapFrom(src => src["shipment_date"]))
+                .ForMember(dest => dest.product_count, opt => opt.MapFrom(src => src["product_count"]));
+                cfg.CreateMap<IDataRecord, Status>()
+                .ForMember(dest => dest.status_name, opt => opt.MapFrom(src => src["status_name"]));
             });
             mapper = configuration.CreateMapper();
         }
@@ -143,11 +146,11 @@ namespace FacadeLibrary
             string exceptionText = "Ошибка регистрации";
             ExecuterNonQuery(query, exceptionText);
         }
-        public List<string> GetStatusList()
+        public List<Status> GetStatusList()
         {
             string query = "select status_name from statuses order by status_id asc";
             string textException = "Ошибка получения списка статусов";
-            return ExecuterGetObjects<string>(query, textException);
+            return ExecuterGetObjects<Status>(query, textException);
         }
         public List<Product> GetProductList()
         {
@@ -297,7 +300,91 @@ namespace FacadeLibrary
                 }
             }
         }
+        public List<Shipper> GetShippers()
+        {
+            var shippers = new List<Shipper>();
+            string query = "SELECT shipper_id, company_name FROM shippers ORDER BY company_name";
 
+            using (var cmd = new NpgsqlCommand(query, _connection))
+            using (var reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    shippers.Add(new Shipper
+                    {
+                        ShipperId = reader.GetInt32(0),
+                        CompanyName = reader.GetString(1)
+                    });
+                }
+            }
+
+            return shippers;
+        }
+        public List<Shipment> GetShipmentList()
+        {
+            string query = @"
+        SELECT 
+            p.product_id,
+            p.product_name,
+            c.category_name AS category,
+            p.manufacturer,
+            s.company_name,
+            sh.shipment_date,
+            si.product_count
+        FROM shipment_items si
+        JOIN shipments sh ON si.shipment_id = sh.shipment_id
+        JOIN products p ON si.product_id = p.product_id
+        JOIN categories c ON p.category_id = c.category_id
+        JOIN shippers s ON sh.shipper_id = s.shipper_id
+        ORDER BY sh.shipment_date DESC;";
+
+            string exceptionText = "Ошибка получения списка поставок";
+            return ExecuterGetObjects<Shipment>(query, exceptionText);
+        }
+        public void AddShipment(int productId, int shipperId, int productCount)
+        {
+            using (var transaction = _connection.BeginTransaction())
+            {
+                try
+                {
+                    // 1. Вставляем новую поставку и получаем shipment_id
+                    string insertShipmentQuery = @"
+                INSERT INTO shipments (shipper_id, shipment_date)
+                VALUES (@shipperId, @shipmentDate)
+                RETURNING shipment_id;
+            ";
+
+                    int shipmentId;
+                    using (var cmd = new NpgsqlCommand(insertShipmentQuery, _connection))
+                    {
+                        cmd.Parameters.AddWithValue("@shipperId", shipperId);
+                        cmd.Parameters.AddWithValue("@shipmentDate", DateTime.Now.Date);
+                        shipmentId = (int)cmd.ExecuteScalar();
+                    }
+
+                    // 2. Вставляем позицию поставки
+                    string insertItemQuery = @"
+                INSERT INTO shipment_items (shipment_id, product_id, product_count)
+                VALUES (@shipmentId, @productId, @productCount);
+            ";
+
+                    using (var cmd = new NpgsqlCommand(insertItemQuery, _connection))
+                    {
+                        cmd.Parameters.AddWithValue("@shipmentId", shipmentId);
+                        cmd.Parameters.AddWithValue("@productId", productId);
+                        cmd.Parameters.AddWithValue("@productCount", productCount);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    transaction.Commit();
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+            }
+        }
         private string GetOrderStatus(int orderId)
         {
             string query = $@"SELECT status_name FROM orders 

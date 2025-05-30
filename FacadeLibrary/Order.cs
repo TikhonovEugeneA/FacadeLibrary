@@ -17,4 +17,8 @@ namespace FacadeLibrary
         public decimal OrderCost {  get; set; }
         public string Status { get; set; }
     }
+    public class Status
+    {
+        public string status_name { get; set; }
+    }
 }
