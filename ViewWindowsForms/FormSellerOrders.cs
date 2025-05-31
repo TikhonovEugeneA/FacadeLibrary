@@ -41,7 +41,7 @@ namespace ViewWindowsForms
         {
             this.Text = $"Продавец: {_currentUser.first_name} {_currentUser.last_name}";
         }
-        private void LoadData<T>(T objects, DataGridView currentDataGridView)
+        public void LoadData<T>(T objects, DataGridView currentDataGridView)
         {
             try
             {
@@ -69,7 +69,7 @@ namespace ViewWindowsForms
             }
         }
 
-        private void buttonGiveOut_Click(object sender, EventArgs e)
+        public void buttonGiveOut_Click(object sender, EventArgs e)
         {
             if (dataGridViewOrderListForEmployes.SelectedRows.Count == 0)
             {
@@ -91,7 +91,7 @@ namespace ViewWindowsForms
             }
         }
 
-        private void buttonRequestOrder_Click(object sender, EventArgs e)
+        public void buttonRequestOrder_Click(object sender, EventArgs e)
         {
             if (dataGridViewOrderListForEmployes.SelectedRows.Count == 0)
             {

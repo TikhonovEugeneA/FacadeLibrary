@@ -220,7 +220,6 @@
 
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPageOrders;
-        private System.Windows.Forms.DataGridView dataGridViewOrderListForEmployes;
         private System.Windows.Forms.Button buttonReturnOrder;
         private System.Windows.Forms.Button buttonRequestOrder;
         private System.Windows.Forms.Button buttonGiveOut;
@@ -233,5 +232,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnOrderDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnOrderCost;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnOrderStatus;
+        public System.Windows.Forms.DataGridView dataGridViewOrderListForEmployes;
     }
 }

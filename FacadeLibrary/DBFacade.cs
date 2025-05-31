@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Npgsql;
 using Npgsql.TypeMapping;
 using AutoMapper;
-using ZXing;
 
 namespace FacadeLibrary
 {
@@ -18,7 +17,7 @@ namespace FacadeLibrary
         public static DBFacade instance;
         private readonly IMapper mapper;
         public readonly string connectionString = "Server=localhost;Port=5432;Database=dbshop;User Id=postgres;Password=controlway";
-        public readonly NpgsqlConnection _connection; // нужно подумать 
+        public readonly NpgsqlConnection _connection;
 
         private DBFacade(string connectionString)
         {
@@ -385,7 +384,7 @@ namespace FacadeLibrary
                 }
             }
         }
-        private string GetOrderStatus(int orderId)
+        public string GetOrderStatus(int orderId)
         {
             string query = $@"SELECT status_name FROM orders 
             JOIN statuses USING(status_id) 

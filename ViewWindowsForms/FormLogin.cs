@@ -25,7 +25,7 @@ namespace ViewWindowsForms
         DBFacade _dbFacade = DBFacade.GetInstance(connectionString); 
 
         // о входе
-        private void buttonLogin_Click(object sender, EventArgs e)
+        public void buttonLogin_Click(object sender, EventArgs e)
         {
             User user = _dbFacade.Login(textBoxPhone.Text,textBoxPassword.Text);
             if (user.role_name == "customer")

@@ -34,6 +34,7 @@
             this.labelPhone = new System.Windows.Forms.Label();
             this.labelPassword = new System.Windows.Forms.Label();
             this.tabControlLoginReg = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -47,10 +48,9 @@
             this.textBoxLastNameReg = new System.Windows.Forms.TextBox();
             this.textBoxFirstNameReg = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabControlLoginReg.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonLogin
@@ -129,6 +129,21 @@
             this.tabControlLoginReg.SelectedIndex = 0;
             this.tabControlLoginReg.Size = new System.Drawing.Size(517, 428);
             this.tabControlLoginReg.TabIndex = 7;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.labelPassword);
+            this.tabPage1.Controls.Add(this.labelPhone);
+            this.tabPage1.Controls.Add(this.textBoxPhone);
+            this.tabPage1.Controls.Add(this.textBoxPassword);
+            this.tabPage1.Controls.Add(this.buttonLogin);
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(509, 399);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Вход";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // tabPage2
             // 
@@ -290,21 +305,6 @@
             this.label1.Size = new System.Drawing.Size(0, 25);
             this.label1.TabIndex = 7;
             // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.labelPassword);
-            this.tabPage1.Controls.Add(this.labelPhone);
-            this.tabPage1.Controls.Add(this.textBoxPhone);
-            this.tabPage1.Controls.Add(this.textBoxPassword);
-            this.tabPage1.Controls.Add(this.buttonLogin);
-            this.tabPage1.Location = new System.Drawing.Point(4, 25);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(509, 399);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Вход";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
             // FormLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -314,10 +314,10 @@
             this.Name = "FormLogin";
             this.Text = "Form1";
             this.tabControlLoginReg.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -325,8 +325,6 @@
         #endregion
 
         private System.Windows.Forms.Button buttonLogin;
-        private System.Windows.Forms.TextBox textBoxPhone;
-        private System.Windows.Forms.TextBox textBoxPassword;
         private System.Windows.Forms.Label labelPhone;
         private System.Windows.Forms.Label labelPassword;
         private System.Windows.Forms.TabControl tabControlLoginReg;
@@ -344,6 +342,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button buttonRegistration;
         private System.Windows.Forms.TextBox textBoxRepeatPasswordReg;
+        public System.Windows.Forms.TextBox textBoxPhone;
+        public System.Windows.Forms.TextBox textBoxPassword;
     }
 }
 
